@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Factorial Calculator</title>
+    <style>
+        body {
+            background-color: #dddddd;
+            font-family: Verdana, Geneva, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .container {
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            width: 400px;
+            margin: 20px auto;
+            margin-top: 10px;
+            box-sizing: border-box;
+        }
+
+        .error-message {
+            color: red;
+        }
+
+        .input-container {
+            margin-top: 1px;
+            text-align: center;
+            padding: 0 10px; /* Add horizontal padding */
+            box-sizing: border-box; /* Include padding in the total width */
+        }
+
+        .input-container input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box; /* Include padding in the total width */
+            font-family: Verdana, Geneva, sans-serif;
+        }
+
+        .input-container button {
+            display: block;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #ffacb4;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+            font-family: Verdana, Geneva, sans-serif;
+        }
+
+        .result-container {
+            margin-top: 20px;
+            text-align: center; /* Center the calculations */
+        }
+
+        .factorial-result {
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 10px;
+            word-wrap: break-word; /* Wrap long content onto the next line */
+        }
+
+        .calculations-list {
+            text-align: center;
+            font-family: Verdana, Geneva, sans-serif;
+            margin-bottom: 10px;
+            padding-left: 0; /* Remove default left padding */
+        }
+
+        .calculations-list li {
+            display: inline; /* Display inline to align horizontally */
+            margin: 0 5px; /* Add margin for spacing */
+            font-size: 14px;
+        }
+
+        .horizontal-line {
+            border-top: 1px solid #ccc;
+            margin: 10px 0;
+        }
+        
+        .calculator-image {
+            display: block;
+            margin: 20px auto;
+            width: 400px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Factorial Calculator</h1>
+    
+    <img class="calculator-image" src="{{ url_for('static', filename='Factorial.jpg') }}" alt="Factorial Image">
+
+    <div class="container">
+        <div class="input-container">
+            <p>The factorial of a non-negative integer is the product of all positive integers less than or equal to that number.<br></br>Enter a number and the corresponding Factorial number will be displayed along with its associated calculations.</p>
+
+            <form action="/" method="POST">
+                <input type="number" name="number" placeholder="Enter a number" min="0" max="950" required>
+                {% if number and int(number) > 950 %}
+                    <p class="error-message">The maximum number allowed is 950.</p>
+                {% endif %}
+                <center><button type="submit">Calculate</button></center>
+            </form>
+        </div>
+
+        {% if factorial %}
+            <div class="result-container">
+                <h2 class="factorial-result">Factorial Result: {{ factorial }}</h2>
+                <div class="horizontal-line"></div>
+                <h3>Calculations:</h3>
+                <ul class="calculations-list">
+                    {% for step in calculations %}
+                        <li>{{ step }}</li>
+                        {% if not loop.last %}
+                            <li>x</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
